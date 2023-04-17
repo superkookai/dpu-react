@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 
 export default function ProductList(){
     const location = useLocation();
     const receivedData = location.state.data;
+    const navigate = useNavigate();
     const endpoint = 'http://localhost:8080/product/list';
     const [products, setProducts] = useState([]);
 
@@ -19,17 +20,17 @@ export default function ProductList(){
             setProducts(jsonResponse.products);
         })
         .catch((error)=>{alert(error)});
-    },[endpoint])
+    },[])
 
     const handleDelete = (id) => {
         setProducts(products.filter((product)=>{
             return product.id !== id;
         }));
 
-        const productId = id;
+        const productId = "26d0d531-22a2-4058-a836-b39ad36c8ed8";
         const url = `http://localhost:8080/product/${productId}`;
 
-        const token = receivedData;
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODE3MTc2NDl9.tageWyJRzh3eUxO0jCrSy_eqriHFN6Atk5CC4YSJrp8";
 
         fetch(url, {
         method: 'DELETE',
@@ -55,11 +56,16 @@ export default function ProductList(){
     const handleUpdate = (id) => {
         console.log("updated id: " + id);
     }
+
+    const handleCreateProduct = () => {
+        navigate('/createproduct',{state:{data:receivedData}});
+    }
     
     return (
         <div className="row text-center">
             <h1>Product List</h1>
             <p>{receivedData}</p>
+            <button onClick={handleCreateProduct}>Create Product</button>
             {
                 products.length > 0 &&
                 products.map((product)=>{

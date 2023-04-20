@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useLocation,useNavigate } from 'react-router-dom';
 
 export default function CreateProduct(){
     const [name,setName] = useState('');
@@ -6,6 +7,10 @@ export default function CreateProduct(){
     const [type,setType] = useState('');
     const [price,setPrice] = useState();
     const [image,setImage] = useState();
+
+    const location = useLocation();
+    const receivedData = location.state.data;
+    const navigate = useNavigate();
 
     const handleCreateProduct = (event) => {
         event.preventDefault();
@@ -18,7 +23,7 @@ export default function CreateProduct(){
             price: parseInt(price),
             image: image
         });
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODE3MzE2MTF9.iBQaS1kD20qo9mdndTPO4ZwRCJXGH1bFUO7gYJSNzKg';
+        const token = receivedData;
 
         fetch(endpoint,{
             method: 'POST',
@@ -35,7 +40,7 @@ export default function CreateProduct(){
             throw new Error("Failed to create product");
         })
         .then((jsonResponse)=>{
-            console.log(jsonResponse);
+            navigate('/products',{state:{data:receivedData}});
         })
     }
 

@@ -27,10 +27,10 @@ export default function ProductList(){
             return product.id !== id;
         }));
 
-        const productId = "26d0d531-22a2-4058-a836-b39ad36c8ed8";
+        const productId = id;
         const url = `http://localhost:8080/product/${productId}`;
 
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODE3MTc2NDl9.tageWyJRzh3eUxO0jCrSy_eqriHFN6Atk5CC4YSJrp8";
+        const token = receivedData;
 
         fetch(url, {
         method: 'DELETE',
@@ -64,14 +64,13 @@ export default function ProductList(){
     return (
         <div className="row text-center">
             <h1>Product List</h1>
-            <p>{receivedData}</p>
             <button onClick={handleCreateProduct}>Create Product</button>
             {
                 products.length > 0 &&
                 products.map((product)=>{
                     return (
                     <div className="card col-4" style={{width: "18rem"}} key={product.id}>
-                        <img src={`http://localhost:8080/uploads/products/${product.image}`} className="card-img-top" alt={product.name}/>
+                        <img src={`http://localhost:8080/${product.image}`} className="card-img-top" alt={product.name}/>
                         <div className="card-body">
                             <h5 className="card-title">{product.name}</h5>
                             <p className="card-text">Type: {product.type}</p>

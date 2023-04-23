@@ -42,8 +42,8 @@ export default function Login(){
     }
   
     return (
-        <div className="mt-3 mx-auto p-3" style={{ width:'400px', background:'#cee'}}>
-            <h1 className="text-center">Login</h1>
+        <div className="mt-5 mx-auto p-3 rounded" style={{ width:'400px', background:'skyblue'}}>
+            <h3 className="text-center">Login</h3>
             <form ref={form} onSubmit={onSubmitForm}>
                 <div className="form-group mb-3">
                     <label htmlFor="username">Username *</label>

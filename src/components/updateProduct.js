@@ -61,8 +61,8 @@ export default function UpdateProduct(){
     }
 
     return (
-        <div className="mt-3 mx-auto p-3" style={{ width:'400px', background:'#cee'}}>
-        <h1 className="text-center">Update Product</h1>
+        <div className="mt-5 mx-auto p-3 rounded" style={{ width:'400px', background:'skyblue'}}>
+        <h3 className="text-center">Update Product</h3>
         <form onSubmit={handleUpdateProduct}>
             <div className="form-group mb-3">
                 <label htmlFor="productname">Product Name*</label>

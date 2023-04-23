@@ -26,7 +26,7 @@ export default function UpdateProduct(){
 
         const productId = receivedData[1];
         
-        const endpoint = 'http://localhost:8080/product/${productId}';
+        const endpoint = `http://localhost:8080/product/${productId}`;
         
         const data = new FormData();
         data.append('name', name);

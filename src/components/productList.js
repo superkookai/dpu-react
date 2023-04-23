@@ -54,7 +54,8 @@ export default function ProductList(){
     }
 
     const handleUpdate = (id) => {
-        console.log("updated id: " + id);
+        const product = products.find(product => product.id === id);
+        navigate('/updateproduct',{state:{data:[receivedData,id,product]}});
     }
 
     const handleCreateProduct = () => {

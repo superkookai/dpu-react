@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { useLocation,useNavigate } from 'react-router-dom';
 
-export default function CreateProduct(){
+export default function UpdateProduct(){
     const [name,setName] = useState('');
     const [detail,setDetail] = useState('');
     const [type,setType] = useState('');
@@ -12,10 +12,21 @@ export default function CreateProduct(){
     const receivedData = location.state.data;
     const navigate = useNavigate();
 
-    const handleCreateProduct = (event) => {
+    useEffect(()=>{
+        const product = receivedData[2];
+        setName(product.name);
+        setDetail(product.detail);
+        setType(product.type);
+        setPrice(product.price);
+        setImage(product.image);
+    },[]);
+
+    const handleUpdateProduct = (event) => {
         event.preventDefault();
+
+        const productId = receivedData[1];
         
-        const endpoint = 'http://localhost:8080/product';
+        const endpoint = 'http://localhost:8080/product/${productId}';
         
         const data = new FormData();
         data.append('name', name);
@@ -24,10 +35,10 @@ export default function CreateProduct(){
         data.append('price', parseInt(price));
         data.append('image', image);
 
-        const token = receivedData;
+        const token = receivedData[0];
 
         fetch(endpoint,{
-            method: 'POST',
+            method: 'PUT',
             body: data,
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -37,10 +48,10 @@ export default function CreateProduct(){
             if (response.ok){
                 return response.json();
             }
-            throw new Error("Failed to create product");
+            throw new Error("Failed to update product");
         })
         .then((jsonResponse)=>{
-            navigate('/products',{state:{data:receivedData}});
+            navigate('/products',{state:{data:receivedData[0]}});
         })
     }
 
@@ -51,8 +62,8 @@ export default function CreateProduct(){
 
     return (
         <div className="mt-3 mx-auto p-3" style={{ width:'400px', background:'#cee'}}>
-        <h1 className="text-center">Create Product</h1>
-        <form onSubmit={handleCreateProduct}>
+        <h1 className="text-center">Update Product</h1>
+        <form onSubmit={handleUpdateProduct}>
             <div className="form-group mb-3">
                 <label htmlFor="productname">Product Name*</label>
                 <input type="text" id="productname" name="productname" className="form-control" value={name} onChange={(e)=>setName(e.target.value)} required/>
